@@ -41,17 +41,14 @@ namespace Movien.Crawler.LostFilm.Services {
             // looks like: http://www.lostfilm.tv/series/<SERIES_NAME>/season_<SESAON_NUMBER>/episode_<EPISODE_NUMBER>/
             // Publish them as LoadPageEvents
 
-            Regex regex = new Regex(@"((?:https|http):\/\/)\w{0,3}.lostfilm.\w+\/\w+\S+.\/season_\w{0,3}.\/episode_\w{0,3}.\/");
-
-            List<LoadPageEvent> links = new List<LoadPageEvent>();
-            
-            MatchCollection matches = regex.Matches(obj.Content);
-
-            foreach (var match in matches)
-            {
-                queue.Publish(new LoadPageEvent(new Uri(match.ToString()), HttpMethod.Get, null));
+            Regex episodeLink = new Regex(@"(?:goTo).'(\/series\/\w+\/\w+\/\w+\/)");
+            string permaLink = "http://www.lostfilm.tv";
+            MatchCollection matches = episodeLink.Matches(obj.Content);
+            foreach (Match item in matches){
+                queue.Publish(new LoadPageEvent(
+                    new Uri(permaLink + item.Groups[1].Value), 
+                    HttpMethod.Get, null));
             }
-
         }
 
     private void ParseJSON(ContentLoadedEvent obj) {
