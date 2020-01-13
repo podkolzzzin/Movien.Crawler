@@ -6,12 +6,13 @@ namespace Movien.Crawler.Events {
 
   public readonly struct ContentLoadedEvent {
 
-    public Uri Url { get; }
+    public LoadPageEvent RequestEvent { get; }
 
     public string Content { get; }
 
     public DateTime LoadedAt { get; }
 
-    public ContentLoadedEvent(Uri url, string content, DateTime loadedAt) => (Url, Content, LoadedAt) = (url, content, loadedAt);
+    public ContentLoadedEvent(LoadPageEvent request, string content, DateTime loadedAt) 
+      => (RequestEvent, Content, LoadedAt) = (request, content, loadedAt);
   }
 }
