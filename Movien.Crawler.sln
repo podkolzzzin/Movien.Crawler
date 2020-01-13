@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler", "Movien.Crawler\Movien.Crawler.csproj", "{4FA3981F-E01D-43DE-811A-17F3143F367C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler", "Movien.Crawler\Movien.Crawler.csproj", "{4FA3981F-E01D-43DE-811A-17F3143F367C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler.LostFilm", "Movien.Crawler.LostFilm\Movien.Crawler.LostFilm.csproj", "{BA19057E-1722-45DE-A708-2C14AB9D2CB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler.LostFilm", "Movien.Crawler.LostFilm\Movien.Crawler.LostFilm.csproj", "{BA19057E-1722-45DE-A708-2C14AB9D2CB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler.EntryPoint", "Movien.Crawler.EntryPoint\Movien.Crawler.EntryPoint.csproj", "{DBCE0B62-3383-4C0F-A769-18E9D739866B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler.EntryPoint", "Movien.Crawler.EntryPoint\Movien.Crawler.EntryPoint.csproj", "{DBCE0B62-3383-4C0F-A769-18E9D739866B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler.LostFilm.Tests", "Movien.Crawler.LostFilm.Tests\Movien.Crawler.LostFilm.Tests.csproj", "{69017177-C36A-4715-95D5-DACE437A4A00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{DBCE0B62-3383-4C0F-A769-18E9D739866B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBCE0B62-3383-4C0F-A769-18E9D739866B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBCE0B62-3383-4C0F-A769-18E9D739866B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69017177-C36A-4715-95D5-DACE437A4A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69017177-C36A-4715-95D5-DACE437A4A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69017177-C36A-4715-95D5-DACE437A4A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69017177-C36A-4715-95D5-DACE437A4A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

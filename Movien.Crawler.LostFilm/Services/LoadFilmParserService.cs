@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Movien.Crawler.Events;
 using Movien.Crawler.Infrostructure;
-using Movien.Crawler.LostFilm.Events;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
