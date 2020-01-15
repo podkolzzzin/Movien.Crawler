@@ -24,7 +24,7 @@ namespace Movien.Crawler.LostFilm.Services {
 
     private void HandleHTML(ContentLoadedEvent obj) {
 
-      if (obj.Url.AbsolutePath.Contains("ajax"))
+      if (obj.RequestEvent.Url.AbsolutePath.Contains("ajax"))
         ParseJSON(obj);
       else
         ParseHTML(obj);
@@ -56,7 +56,7 @@ namespace Movien.Crawler.LostFilm.Services {
       var data = (JArray)content.GetValue("data");
       foreach (JToken item in data) {
         queue.Publish(new LoadPageEvent(
-          new Uri(obj.Url, item.Value<string>("link") + "/seasons/"),
+          new Uri(obj.RequestEvent.Url, item.Value<string>("link") + "/seasons/"),
           HttpMethod.Get, null));
       }
     }

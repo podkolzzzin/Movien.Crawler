@@ -15,14 +15,16 @@ namespace Movien.Crawler.Services {
     private readonly IEventQueue queue;
     private readonly IDisposable eventSubscribtion;
     private readonly TimeSpan throttling;
+    private readonly ILog log;
     private readonly SemaphoreSlim syncObject = new SemaphoreSlim(1);
 
     private DateTime lastLoaded;
 
-    public LoaderService(IEventQueue queue, TimeSpan throttling) {
+    public LoaderService(IEventQueue queue, TimeSpan throttling, ILog log) {
 
       this.queue = queue;
       this.throttling = throttling;
+      this.log = log;
 
       eventSubscribtion = queue.Subscribe<LoadPageEvent>(LoadPage);
     }
@@ -37,7 +39,7 @@ namespace Movien.Crawler.Services {
         await LoadPageInternal(uri);
       }
       catch (Exception ex) {
-        Console.WriteLine(ex.ToString());
+        log.WriteError("Error during load: " + uri.Url, ex);
       }
       finally {
         syncObject.Release();
@@ -54,7 +56,8 @@ namespace Movien.Crawler.Services {
 
     private async Task LoadPageInternal(LoadPageEvent uri) {
 
-      Console.WriteLine("Recieve URL to load:" + uri.Url);
+      const string logMessage = "Recieve URL to load:";
+      log.WriteLine(logMessage + uri.Url);
       HttpClient client = new HttpClient();
       HttpResponseMessage result;
 
@@ -68,7 +71,7 @@ namespace Movien.Crawler.Services {
       var content = await result.Content.ReadAsStringAsync();
 
       lastLoaded = DateTime.Now;
-      Console.WriteLine("URL loaded: " + uri.Url);
+      log.WriteLine("URL loaded: ".PadRight(logMessage.Length) + uri.Url);
       queue.Publish(new ContentLoadedEvent(uri, content, lastLoaded));
     }
 

@@ -11,7 +11,8 @@ namespace Movien.Crawler.EntryPoint {
     static void Main(string[] args) {
 
       var queue = new SimpleEventQueue();
-      using (var loader = new LoaderService(queue, throttling: TimeSpan.FromSeconds(1))) {
+      var simpleLog = new SimpleConsoleLog();
+      using (var loader = new LoaderService(queue, throttling: TimeSpan.FromSeconds(1), simpleLog)) {
         var lostFilmLoader = new LostFilmParserService(queue);
         var lostFilmSeriesLoader = new LostFilmSeriesesLoader(queue);
 

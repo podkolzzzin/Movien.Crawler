@@ -51,7 +51,7 @@ namespace Movien.Crawler.LostFilm.Services {
          act = "serial",
          type = "search",
          o = offset,
-         s = 3,
+         s = 1,
          t = 0
        }));
     }
