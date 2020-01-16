@@ -44,7 +44,7 @@ namespace Movien.Crawler.LostFilm.Services {
 
     private void LoadNext(ContentLoadedEvent evt, int loadedCount) {
 
-      int offset = evt.RequestEvent.FormData?.o + loadedCount ?? loadedCount;
+      int offset = ((dynamic)evt.RequestEvent.FormData)?.o + loadedCount ?? loadedCount;
 
       queue.Publish(new LoadPageEvent(Constants.AjaxSeriesesUrl, HttpMethod.Post,
        new {

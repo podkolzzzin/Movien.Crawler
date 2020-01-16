@@ -1,4 +1,5 @@
 ﻿using Movien.Crawler.Events;
+using Movien.Crawler.Helpers;
 using Movien.Crawler.Infrostructure;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,17 @@ namespace Movien.Crawler.Services {
     private readonly IDisposable eventSubscribtion;
     private readonly TimeSpan throttling;
     private readonly ILog log;
+    private readonly ICache cache;
     private readonly SemaphoreSlim syncObject = new SemaphoreSlim(1);
 
     private DateTime lastLoaded;
 
-    public LoaderService(IEventQueue queue, TimeSpan throttling, ILog log) {
+    public LoaderService(IEventQueue queue, TimeSpan throttling, ILog log = null, ICache cache = null) {
 
       this.queue = queue;
       this.throttling = throttling;
       this.log = log;
+      this.cache = cache;
 
       eventSubscribtion = queue.Subscribe<LoadPageEvent>(LoadPage);
     }
@@ -39,7 +42,7 @@ namespace Movien.Crawler.Services {
         await LoadPageInternal(uri);
       }
       catch (Exception ex) {
-        log.WriteError("Error during load: " + uri.Url, ex);
+        log?.WriteError("Error during load: " + uri.Url, ex);
       }
       finally {
         syncObject.Release();
@@ -57,7 +60,11 @@ namespace Movien.Crawler.Services {
     private async Task LoadPageInternal(LoadPageEvent uri) {
 
       const string logMessage = "Recieve URL to load:";
-      log.WriteLine(logMessage + uri.Url);
+      log?.WriteLine(logMessage + uri.Url);
+
+      if (await CheckCache(uri, logMessage.Length))
+        return;
+
       HttpClient client = new HttpClient();
       HttpResponseMessage result;
 
@@ -65,25 +72,31 @@ namespace Movien.Crawler.Services {
         result = await client.GetAsync(uri.Url);
       }
       else {
-        result = await client.PostAsync(uri.Url, new FormUrlEncodedContent(GetFormData(uri.FormData)));
+        result = await client.PostAsync(uri.Url, new FormUrlEncodedContent(uri.FormData.ToDictionary()));
       }
       result.EnsureSuccessStatusCode();
       var content = await result.Content.ReadAsStringAsync();
 
       lastLoaded = DateTime.Now;
-      log.WriteLine("URL loaded: ".PadRight(logMessage.Length) + uri.Url);
+      log?.WriteLine("URL loaded: ".PadRight(logMessage.Length) + uri.Url);
       queue.Publish(new ContentLoadedEvent(uri, content, lastLoaded));
     }
 
-    private IEnumerable<KeyValuePair<string, string>> GetFormData(dynamic formData) {
+    private async Task<bool> CheckCache(LoadPageEvent request, int logMessageLength) {
 
-      Dictionary<string, string> result = new Dictionary<string, string>();
-      foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(formData)) {
-        object obj2 = descriptor.GetValue(formData);
-        result.Add(descriptor.Name, obj2.ToString());
+      if (cache != null) {
+        var cachedItem = await cache?.Retrieve(request);
+        if (cachedItem != null) {
+          log?.WriteLine("Item loaded from cache. HTTPRequest skipped".PadRight(logMessageLength));
+          queue.Publish(cachedItem.Value);
+          return true;
+        }
+        else {
+          log?.WriteLine("Cache does not contain suitable item".PadRight(logMessageLength));
+          return false;
+        }
       }
-
-      return result;
+      return false;
     }
   }
 }

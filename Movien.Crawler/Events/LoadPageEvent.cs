@@ -11,8 +11,10 @@ namespace Movien.Crawler.Events {
 
     public HttpMethod Method { get; }
 
-    public dynamic FormData { get; }
+    public object FormData { get; }
 
-    public LoadPageEvent(Uri url, HttpMethod method, dynamic formData) => (Url, Method, FormData) = (url, method, formData);
+    public object Headers { get; }
+
+    public LoadPageEvent(Uri url, HttpMethod method, dynamic formData, dynamic headers = null) => (Url, Method, FormData, Headers) = (url, method, formData, headers);
   }
 }

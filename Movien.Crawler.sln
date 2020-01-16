@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler.LostFilm", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler.EntryPoint", "Movien.Crawler.EntryPoint\Movien.Crawler.EntryPoint.csproj", "{DBCE0B62-3383-4C0F-A769-18E9D739866B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler.LostFilm.Tests", "Movien.Crawler.LostFilm.Tests\Movien.Crawler.LostFilm.Tests.csproj", "{69017177-C36A-4715-95D5-DACE437A4A00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movien.Crawler.LostFilm.Tests", "Movien.Crawler.LostFilm.Tests\Movien.Crawler.LostFilm.Tests.csproj", "{69017177-C36A-4715-95D5-DACE437A4A00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movien.Crawler.DataAccess", "Movien.Crawler.DataAccess\Movien.Crawler.DataAccess.csproj", "{B027A6EC-9211-4AEE-89E9-A859CBCC0D3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{69017177-C36A-4715-95D5-DACE437A4A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69017177-C36A-4715-95D5-DACE437A4A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69017177-C36A-4715-95D5-DACE437A4A00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B027A6EC-9211-4AEE-89E9-A859CBCC0D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B027A6EC-9211-4AEE-89E9-A859CBCC0D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B027A6EC-9211-4AEE-89E9-A859CBCC0D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B027A6EC-9211-4AEE-89E9-A859CBCC0D3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
